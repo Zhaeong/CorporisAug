@@ -8,13 +8,9 @@ public class PlayerController : MonoBehaviour {
     string currentDirection, previousDirection;
 	// Use this for initialization
 	void Start () {
-
         isfacingleft = true;
         wasfacingleft = true;
-        Anim = GetComponent<Animator>();
-        
-
-	
+        Anim = GetComponent<Animator>();	
 	}
 	
 	// Update is called once per frame
@@ -22,23 +18,6 @@ public class PlayerController : MonoBehaviour {
         float input_x = Input.GetAxisRaw("Horizontal");
         float input_y = Input.GetAxisRaw("Vertical");
         bool isWalking = (Mathf.Abs(input_x) + Mathf.Abs(input_y)) > 0;
-        Anim.SetBool("walkingLeft", input_x < 0);
-
-        if (input_x == -1)
-        {
-            isfacingleft = true;
-        }
-        else if (input_x == 1)
-        {
-            isfacingleft = false;
-        }
-
-        if (isfacingleft != wasfacingleft)
-        {
-            flip();
-            wasfacingleft = isfacingleft;
-        }
-
 
 
         Anim.SetBool("isWalking", isWalking);
