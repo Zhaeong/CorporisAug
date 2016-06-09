@@ -73,7 +73,7 @@ public class MouseController : MonoBehaviour {
         if (isTouchingAnother)
         {
             //The commented out code displays a button, kinda clunky and not necessary
-            if (GUI.Button(new Rect(10, 10, 150, 100), "Connect") || Input.GetKeyDown("r") || Input.GetKeyDown("space"))
+            if (GUI.Button(new Rect(10, 10, 150, 100), "Connect"))
             {
                 ObjCollisionController ObjCC = objToDrag.GetComponent<ObjCollisionController>();
                 objToDrag.transform.parent = ObjCC.touchedObj.transform;
