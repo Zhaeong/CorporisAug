@@ -28,7 +28,8 @@ public class MouseController : MonoBehaviour {
                 MouseDragging = true;
                 //Debug.Log("Hit " + hitInfo.transform.gameObject.name);
                 objToDrag = hitInfo.transform.gameObject;
-                
+                HighlightObj(objToDrag, Color.yellow);
+
 
                 if (hitInfo.transform.gameObject.tag == "Construction")
                 {
@@ -44,6 +45,8 @@ public class MouseController : MonoBehaviour {
 
         if (Input.GetMouseButtonUp(0))
         {
+            HighlightObj(objToDrag, Color.white);
+            
             MouseDragging = false;
         }
 
@@ -81,5 +84,15 @@ public class MouseController : MonoBehaviour {
             
         }
 
+    }
+
+    void HighlightObj(GameObject obj, Color col)
+    {
+        obj.GetComponent<Renderer>().material.color = col;
+        Transform[] listOfChilds = obj.GetComponentsInChildren<Transform>();
+        foreach (Transform child in listOfChilds)
+        {
+            child.GetComponent<Renderer>().material.color = col;
+        }
     }
 }
