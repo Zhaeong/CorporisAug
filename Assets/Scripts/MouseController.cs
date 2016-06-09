@@ -5,7 +5,7 @@ public class MouseController : MonoBehaviour {
 
     public bool isTouchingAnother;
     public GameObject objTouched;
-    private GameObject objToDrag;
+    public GameObject objToDrag;
     private Vector3 screenPoint, offset;
     private bool MouseDragging;
 
@@ -75,7 +75,8 @@ public class MouseController : MonoBehaviour {
             //The commented out code displays a button, kinda clunky and not necessary
             if (GUI.Button(new Rect(10, 10, 150, 100), "Connect") || Input.GetKeyDown("r") || Input.GetKeyDown("space"))
             {
-                objTouched.transform.parent = objToDrag.transform;
+                ObjCollisionController ObjCC = objToDrag.GetComponent<ObjCollisionController>();
+                objToDrag.transform.parent = ObjCC.touchedObj.transform;
             }
             
         }

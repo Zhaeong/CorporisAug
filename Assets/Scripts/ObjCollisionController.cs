@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ObjCollisionController : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+    public GameObject touchedObj;
 	void Start () {
 	
 	}
@@ -18,6 +19,7 @@ public class ObjCollisionController : MonoBehaviour {
         GameObject MouseControls = GameObject.Find("MouseControllerObj");
         MouseController MouseControllerScript = MouseControls.GetComponent<MouseController>();
         MouseControllerScript.isTouchingAnother = true;
+        touchedObj = other.gameObject;
         MouseControllerScript.objTouched = other.gameObject;
         //Debug.Log("Collldlfdlff");
     }
