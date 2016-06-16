@@ -4,12 +4,11 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     Animator Anim;
-    private bool isfacingleft, wasfacingleft;
+
     string currentDirection, previousDirection;
 	// Use this for initialization
 	void Start () {
-        isfacingleft = true;
-        wasfacingleft = true;
+
         Anim = GetComponent<Animator>();	
 	}
 	
