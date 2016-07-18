@@ -8,6 +8,7 @@ public class MouseController : MonoBehaviour {
     public GameObject objToDrag;
     private Vector3 screenPoint, offset;
     private bool MouseDragging;
+    private Color objColor;
 
     // Use this for initialization
     void Start () {
@@ -28,6 +29,7 @@ public class MouseController : MonoBehaviour {
                 MouseDragging = true;
                 //Debug.Log("Hit " + hitInfo.transform.gameObject.name);
                 objToDrag = hitInfo.transform.gameObject;
+                objColor = objToDrag.GetComponent<Renderer>().material.color;
                 HighlightObj(objToDrag, Color.yellow);
 
 
@@ -45,7 +47,7 @@ public class MouseController : MonoBehaviour {
 
         if (Input.GetMouseButtonUp(0))
         {
-            HighlightObj(objToDrag, Color.white);
+            HighlightObj(objToDrag, objColor);
             
             MouseDragging = false;
         }
