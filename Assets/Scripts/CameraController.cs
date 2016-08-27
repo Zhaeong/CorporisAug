@@ -21,8 +21,8 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.DrawLine(transform.position, cameraAnchor.transform.position, new Color(0, 0, 0));
-        transform.LookAt(cameraAnchor.transform);
+        //Debug.DrawLine(transform.position, cameraAnchor.transform.position, new Color(0, 0, 0));
+        //transform.LookAt(cameraAnchor.transform);
         
 
     }
