@@ -35,19 +35,14 @@ public class FirstPersonController : MonoBehaviour {
 
         //Vector3 vMovement = new Vector3(x * MovementSpeed, 0, z * MovementSpeed);
 
-        if (z!=0)
+        if (z!= 0.0f)
         {
-            CC.Move(z * MoveDirectionForward * MovementSpeed);
+            CC.Move(z * MoveDirectionForward * MovementSpeed * Time.deltaTime);
         }
+        if(x != 0.0f)
+            CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
 
-        if(x!=0)
-        {
-            if(z>0)
-                CC.Move(x * MoveRight * MovementSpeed);
-            else
-                CC.Move(x * MoveLeft * MovementSpeed);
-
-        }
+        
             
 
        
