@@ -5,6 +5,7 @@ public class FirstPersonController : MonoBehaviour {
     public Camera mainCamera;
     public float MovementSpeed = 10.0f;
     public float Gravity = 20.0f;
+    public float JumpHeight = 10.0f;
 
     public float HorizRotationSpeed, VerticalRotationSpeed;
     private float yaw, pitch;
@@ -28,28 +29,45 @@ public class FirstPersonController : MonoBehaviour {
 
         mainCamera.transform.eulerAngles = new Vector3(pitch, yaw, 0.0f);
 
-        Vector3 MoveDirectionForward = mainCamera.transform.forward;
-        MoveDirectionForward.y -= Gravity * Time.deltaTime;
-        MoveDirectionForward = new Vector3(MoveDirectionForward.x, 0, MoveDirectionForward.z);
+        Vector3 MoveDirectionForward;
+        Vector3 Movement = Vector3.zero;
 
-        Vector3 MoveRight = Vector3.Cross(MoveDirectionForward, Vector3.up);
-        Vector3 MoveLeft = -MoveRight;
-        
-        //Vector3 vMovement = new Vector3(x * MovementSpeed, 0, z * MovementSpeed);
+        if (CC.isGrounded)
+        {
+            MoveDirectionForward = mainCamera.transform.forward;
+            MoveDirectionForward.y -= Gravity * Time.deltaTime;
+            MoveDirectionForward = new Vector3(MoveDirectionForward.x, 0, MoveDirectionForward.z);
 
-        if (z!= 0.0f)
-        {
-            //MoveDirectionForward.y -= Gravity * Time.deltaTime;
-            CC.Move(z * MoveDirectionForward * MovementSpeed * Time.deltaTime);
             
+
+            Vector3 MoveRight = Vector3.Cross(MoveDirectionForward, Vector3.up);
+            Vector3 MoveLeft = -MoveRight;
+
             
+
+            if (z != 0.0f)
+            {
+                Movement = z * MoveDirectionForward * MovementSpeed * Time.deltaTime;
+                //CC.Move(z * MoveDirectionForward * MovementSpeed * Time.deltaTime);
+
+
+            }
+            if (x != 0.0f)
+            {
+                Movement = x * MoveLeft * MovementSpeed * Time.deltaTime;                
+                //CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
+
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Movement.y = JumpHeight;
+            }
         }
-        if (x != 0.0f)
-        {
-            //MoveLeft.y -= Gravity * Time.deltaTime;
-            CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
-            
-        }
+        Movement.y -= Gravity * Time.deltaTime;
+        CC.Move(Movement);
+
+
 
     }
 }
