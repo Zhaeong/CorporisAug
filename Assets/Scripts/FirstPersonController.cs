@@ -41,11 +41,5 @@ public class FirstPersonController : MonoBehaviour {
         }
         if(x != 0.0f)
             CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
-
-        
-            
-
-       
-
     }
 }
