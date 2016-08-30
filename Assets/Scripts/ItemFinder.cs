@@ -32,6 +32,7 @@ public class ItemFinder : MonoBehaviour {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     UIC.GameObjectList.Add(HitObj);
+                    HitObj.SetActive(false);
                 }
             }
             else

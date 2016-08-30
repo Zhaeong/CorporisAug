@@ -8,6 +8,8 @@ public class UIController: MonoBehaviour {
     public Texture2D crosshairImage;    
     public List<GameObject> GameObjectList;
     public bool ShowPickup;
+    public int row = 4;
+    public int col = 5;
 
     private ItemFinder IF;
     private bool InventoryOn;
@@ -52,19 +54,54 @@ public class UIController: MonoBehaviour {
         //}
         if(InventoryOn)
         {
+            int[] xDim = new int[row*col];
+            int[] yDim = new int[row * col];
+
             float xInv = (Screen.width / 2) - (InventoryImg.width / 2);
             float yInv = (Screen.height / 2) - (InventoryImg.height / 2);
             Debug.Log("Width: " + InventoryImg.width + "Height:" + InventoryImg.height);
 
             GUI.Box(new Rect(xInv, yInv, InventoryImg.width, InventoryImg.height), InventoryImg);
 
+            int x_box = (int)xInv + 10;
+            int y_box = (int)yInv + 10;
+
+            for (int i = 0; i < row*col; i++)
+            {
+                GUI.Box(new Rect(x_box, y_box, 50, 50), i.ToString());
+                xDim[i] = x_box;
+                yDim[i] = y_box;
+                if (x_box < (int)xInv + 250)
+                {
+                    x_box += 60;
+                }
+                else
+                {
+                    y_box += 60;
+                    x_box = (int)xInv + 10;
+                }
+            }
+
+
+
             foreach (GameObject ga in GameObjectList)
             {
                 SpriteRenderer ObjSR = ga.GetComponent<SpriteRenderer>();
                 Sprite GameObjSprite = ObjSR.sprite;
 
-                GUI.Button(new Rect(200, 200, 50, 50), GameObjSprite.texture);
+                GUI.Button(new Rect(xDim[0], yDim[0], 50, 50), GameObjSprite.texture);
                 
+            }
+
+            for(int j = 0; j < GameObjectList.Count; j++)
+            {
+                GameObject GamObj = GameObjectList[j];
+
+                SpriteRenderer ObjSR = GamObj.GetComponent<SpriteRenderer>();
+                Sprite GameObjSprite = ObjSR.sprite;
+
+                GUI.Button(new Rect(xDim[j], yDim[j], 50, 50), GameObjSprite.texture);
+
             }
 
         }
