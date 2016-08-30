@@ -5,10 +5,15 @@ public class FirstPersonController : MonoBehaviour {
     public Camera mainCamera;
     public float MovementSpeed = 10.0f;
     public float Gravity = 20.0f;
-    public float JumpHeight = 10.0f;
+    public float JumpHeight = 5.0f;
+    public float JumpSpeed = 10.0f;
 
     public float HorizRotationSpeed, VerticalRotationSpeed;
     private float yaw, pitch;
+
+    private float curHeight, tarHeight;
+
+    private bool isJumping;
     CharacterController CC;
 
 
@@ -17,10 +22,14 @@ public class FirstPersonController : MonoBehaviour {
         CC = gameObject.GetComponent<CharacterController>();
         yaw = 0.0f;
         pitch = 0.0f;
+        isJumping = false;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        curHeight = transform.position.y;
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -32,40 +41,50 @@ public class FirstPersonController : MonoBehaviour {
         Vector3 MoveDirectionForward;
         Vector3 Movement = Vector3.zero;
 
-        if (CC.isGrounded)
-        {
-            MoveDirectionForward = mainCamera.transform.forward;
-            MoveDirectionForward.y -= Gravity * Time.deltaTime;
-            MoveDirectionForward = new Vector3(MoveDirectionForward.x, 0, MoveDirectionForward.z);
 
-            
+        MoveDirectionForward = mainCamera.transform.forward;
+        MoveDirectionForward = new Vector3(MoveDirectionForward.x, 0, MoveDirectionForward.z);
 
-            Vector3 MoveRight = Vector3.Cross(MoveDirectionForward, Vector3.up);
-            Vector3 MoveLeft = -MoveRight;
+        Vector3 MoveRight = Vector3.Cross(MoveDirectionForward, Vector3.up);
+        Vector3 MoveLeft = -MoveRight;
 
-            
 
             if (z != 0.0f)
             {
-                Movement = z * MoveDirectionForward * MovementSpeed * Time.deltaTime;
-                //CC.Move(z * MoveDirectionForward * MovementSpeed * Time.deltaTime);
-
-
+                CC.Move(z * MoveDirectionForward * MovementSpeed * Time.deltaTime);
             }
             if (x != 0.0f)
             {
-                Movement = x * MoveLeft * MovementSpeed * Time.deltaTime;                
-                //CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
-
+                CC.Move(x * MoveLeft * MovementSpeed * Time.deltaTime);
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetButton("Jump") && CC.isGrounded)
             {
-                Movement.y = JumpHeight;
+
+                    tarHeight = curHeight + JumpHeight;
+                    isJumping = true;
+                
+            }
+
+
+
+
+        if (isJumping)
+        {
+            if (curHeight >= tarHeight)
+            {
+                isJumping = false;
+            }
+            else
+            {
+                CC.Move(Vector3.up * Time.deltaTime * JumpSpeed);
             }
         }
-        Movement.y -= Gravity * Time.deltaTime;
-        CC.Move(Movement);
+
+        if (!isJumping)
+        {
+            CC.Move(Vector3.down * Time.deltaTime * Gravity);
+        }
 
 
 
