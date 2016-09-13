@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class UIController: MonoBehaviour {
 
     public Texture InventoryImg;
+    public Texture CharTemplate;
     public Texture2D crosshairImage;    
     public List<GameObject> GameObjectList;
     public bool ShowPickup;
@@ -47,28 +48,27 @@ public class UIController: MonoBehaviour {
             GUI.Label(new Rect(Screen.width / 2, Screen.height / 2, 100, 20), "PickUp", GS);
         }
 
-        //for(int i = 0; i < GameObjectList.Count; i++)
-        //{
-        //    GUI.Button(new Rect(200, 200, 100, 100), );
-
-        //}
         if(InventoryOn)
         {
             int[] xDim = new int[row*col];
             int[] yDim = new int[row * col];
 
-            float xInv = (Screen.width / 2) - (InventoryImg.width / 2);
+            float xInv = (Screen.width / 2) - (InventoryImg.width / 2) + 200;
             float yInv = (Screen.height / 2) - (InventoryImg.height / 2);
-            Debug.Log("Width: " + InventoryImg.width + "Height:" + InventoryImg.height);
+            //Debug.Log("Width: " + InventoryImg.width + "Height:" + InventoryImg.height);
 
+            //ItemStorage
             GUI.Box(new Rect(xInv, yInv, InventoryImg.width, InventoryImg.height), InventoryImg);
+
+            //DraggingStuff
+            GUI.Box(new Rect(xInv - 400, yInv, CharTemplate.width, CharTemplate.height), CharTemplate);
 
             int x_box = (int)xInv + 10;
             int y_box = (int)yInv + 10;
 
             for (int i = 0; i < row*col; i++)
             {
-                GUI.Box(new Rect(x_box, y_box, 50, 50), i.ToString());
+                GUI.Box(new Rect(x_box, y_box, 50, 50), "");
                 xDim[i] = x_box;
                 yDim[i] = y_box;
                 if (x_box < (int)xInv + 250)
